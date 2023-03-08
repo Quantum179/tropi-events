@@ -9,8 +9,9 @@ import { CreateEditUserDto } from "./dtos/createEditUser.dto";
 export class UserService {
 	constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
-	createUser(dto: CreateEditUserDto) {
-		
+
+	findAll() {
+		return this.userRepository.find()
 	}
 
 	findUserByID(id: number) {

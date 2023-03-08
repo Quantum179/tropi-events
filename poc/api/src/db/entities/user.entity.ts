@@ -15,10 +15,10 @@ export class User {
 	@Column({nullable: false, default: TypeUser.Member})
 	type: number
 
-  @Column({nullable: false, default: ''})
+  @Column({nullable: false, default: '', unique: true})
   username: string;
 
-  @Column({name: 'email_address', nullable: false, default: ''})
+  @Column({name: 'email_address', nullable: false, default: '', unique: true})
   email: string;
 
 	@Column({name: 'phone_number', nullable: false, default: ''})

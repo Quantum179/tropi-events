@@ -12,10 +12,10 @@ export class Event {
   @Column({nullable: false, default: ''})
   name: string;
 
-	@Column({nullable: false, default: ''})
+	@Column({type: 'timestamptz', nullable: false})
 	startDate: Date
 
-  @Column({nullable: false, default: ''})
+  @Column({type: 'timestamptz', nullable: false})
 	endDate: Date
 
   @Column({nullable: false, default: ''})

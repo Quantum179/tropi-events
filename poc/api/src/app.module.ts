@@ -12,6 +12,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import entities from './db/entities';
 import { User } from './db/entities/user.entity';
+import { Event } from './db/entities/event.entity';
+import { EventService } from './event/event.service';
 
 @Module({
   imports: [
@@ -31,9 +33,10 @@ import { User } from './db/entities/user.entity';
       inject: [ConfigService],
     }),
 		TypeOrmModule.forFeature([User]),
+		TypeOrmModule.forFeature([Event]),
 		UserModule, AuthModule, OrgaModule, EventModule
 	],
   controllers: [AuthController, EventController, OrgaController],
-  providers: [AuthService, DBService],
+  providers: [AuthService, EventService, DBService],
 })
 export class AppModule {}

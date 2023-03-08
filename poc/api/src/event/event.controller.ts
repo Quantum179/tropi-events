@@ -1,17 +1,22 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { ViewUserDto } from "src/user/dtos/viewUser.dto";
 import { CreateEditEventDto } from "./dtos/createEditEvent.dto";
 import { ViewEventDto } from "./dtos/ViewEvent.dto";
+import { EventService } from "./event.service";
 
 @Controller('events')
 export class EventController {
+	constructor(private eventService: EventService) {}
+
 	@Get()
-	getEvents(): ViewEventDto[] {
-		return [new ViewEventDto(), new ViewEventDto()]
+	async getEvents() {
+		let events = await this.eventService.findAllEvents()
+		return events.map((x) => new ViewEventDto(x))
 	}
 
 	@Get(':id')
-	getEvent(@Param('id') id: number): ViewEventDto {
-		return new ViewEventDto()
+	async getEvent(@Param('id') id: number) {
+		return await this.eventService.findEventByID(id)
 	}
 
 	@Post()
@@ -26,6 +31,6 @@ export class EventController {
 
 	@Delete(':id')
 	deleteEvent(@Param('id') id: number) {
-
+		this.eventService.deleteEvent(id)
 	}
 }
