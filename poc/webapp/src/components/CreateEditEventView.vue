@@ -35,8 +35,8 @@ export default class CreateEditEventView extends Vue {
     return this.id === -1 ? 'Création d\'événement' : 'Modification d\'événement'
   }
 
-  fetchEvent!: (id: number) => any
-  createEvent!: (form: object) => any
+  fetchEvent!: (id: number) => void
+  createEvent!: (form: object) => void
 
   async mounted() {
     console.log(this.id)

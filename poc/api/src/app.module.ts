@@ -14,6 +14,7 @@ import entities from './db/entities';
 import { User } from './db/entities/user.entity';
 import { Event } from './db/entities/event.entity';
 import { EventService } from './event/event.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -37,6 +38,6 @@ import { EventService } from './event/event.service';
 		UserModule, AuthModule, OrgaModule, EventModule
 	],
   controllers: [AuthController, EventController, OrgaController],
-  providers: [AuthService, EventService, DBService],
+  providers: [AuthService, EventService, DBService, JwtService],
 })
 export class AppModule {}

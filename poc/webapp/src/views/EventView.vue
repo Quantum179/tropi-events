@@ -31,8 +31,8 @@ import CreateEditEventView from '../components/CreateEditEventView.vue';
 })
 export default class EventView extends Vue {
   events!: []
-  selectEvent!: (event: any) => any
-  fetchEvents!: () => any
+  selectEvent!: (event: object) => void
+  fetchEvents!: () => void
 
   selectedID: number = -1
   dialog: boolean = false
@@ -46,3 +46,8 @@ export default class EventView extends Vue {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+h1
+  text-align center
+</style>

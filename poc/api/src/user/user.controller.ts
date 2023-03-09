@@ -9,8 +9,7 @@ export class UserController {
 
 	@Get()
 	async findUsers(@Request() req) {
-		return req.user
-		// let users = await this.userService.findAll()
-		// return users.map((x) => new ViewUserDto(x))
+		let users = await this.userService.findAll()
+		return users.map((x) => new ViewUserDto(x))
 	}
 }
