@@ -6,8 +6,8 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="4">
-              <ValidationProvider name="username" immediate v-slot="{ errors }">
-                <v-text-field v-model="formDto.username" label="Username" required></v-text-field>
+              <ValidationProvider name="username" immediate v-slot="{ errors }" rules="min:3|alpha_num">
+                <v-text-field v-model="formDto.username" label="Nom d'utilisateur" required></v-text-field>
                 <span>{{ errors[0] }}</span>
               </ValidationProvider>
             </v-col>
@@ -15,7 +15,7 @@
 
           <v-row>
             <v-col cols="12" md="4">
-              <ValidationProvider name="password" immediate v-slot="{ errors }">
+              <ValidationProvider name="password" immediate v-slot="{ errors }" rules="min:8">
                 <v-text-field v-model="formDto.password" label="Mot de passe" required type="password"></v-text-field>
                 <span>{{ errors[0] }}</span>
               </ValidationProvider>
@@ -53,7 +53,12 @@ export default class LoginView extends Vue {
   }
 
   async submitLogin() {
-    stateModule.login(this.formDto)
+    await stateModule.login(this.formDto)
+    if (stateModule.user.type === -1) {
+      // login incorrect
+    } else {
+      this.$router.push('/events')
+    }
   }
 }
 </script>

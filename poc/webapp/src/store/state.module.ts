@@ -1,21 +1,36 @@
 import axios from 'axios'
 import {
-  Module, VuexModule, Mutation, MutationAction, getModule
+  Module, VuexModule, Mutation, MutationAction
 } from 'vuex-module-decorators'
 
+export interface IUser {
+  id: number
+  username: string,
+  type: number,
+  email: string,
+  phoneNumber: string
+}
 export interface IState {
   token: string,
-  user: object,
+  user: IUser,
   events: Array<object>,
-  selectedEvent: object
+  selectedEvent: object,
+  lastStatus: number
 }
 
 @Module({ name: 'state' })
 export default class StateModule extends VuexModule implements IState {
   token = ''
-  user = {}
+  user = {
+    id: -1,
+    username: '',
+    type: -1,
+    email: '',
+    phoneNumber: ''
+  }
   events = []
   selectedEvent = {}
+  lastStatus = 0
 
   @Mutation
   setToken(token: string) {
@@ -33,31 +48,34 @@ export default class StateModule extends VuexModule implements IState {
   }
 
   @Mutation
-  setUser(user: object) {
+  setUser(user: IUser) {
     this.user = user
   }
 
   @MutationAction
   async login(form: object) {
     try {
-      const result: { token: string, user: object } = await axios.post('http://localhost:3333/auth/login', form)
-      return { ...result }
+      const result = await axios.post('http://localhost:3333/auth/login', form)
+      return { ...result.data, lastStatus: result.status }
     } catch (error) {
-      return undefined
+      return error
     }
   }
 
   @MutationAction
   async signup(form: object) {
-    const result: { token: string, user: object } = await axios.post('http://localhost:3333/auth/signup', form)
-    if (!result.token) { return undefined }
-    return { ...result }
+    try {
+      const result = await axios.post('http://localhost:3333/auth/signup', form)
+      return { ...result.data, lastStatus: result.status }
+    } catch (error) {
+      return error
+    }
   }
 
   @MutationAction
   async fetchEvents() {
-    const result: { events: Array<object>, code: number } = await axios.get('http://localhost:3333/events')
-    return { events: result.events }
+    const result = await axios.get('http://localhost:3333/events')
+    return { ...result.data }
   }
 
   @MutationAction

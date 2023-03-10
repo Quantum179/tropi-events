@@ -6,9 +6,9 @@ import StateModule, { IState } from './state.module'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+const store = new Vuex.Store<IState>({
   modules: {
-    StateModule
+    state: StateModule
   }
 })
 

@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <v-app-bar dark>
-      <v-toolbar-title>Démo</v-toolbar-title>
+      <v-toolbar-title @click="goToHome()">My App</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text v-if="!user" to="/login">SE CONNECTER</v-btn>
-      <v-btn v-else>SE DECONNECTER</v-btn>
+      <v-btn text v-if="currentUser.id === -1" to="/login">SE CONNECTER</v-btn>
     </v-app-bar>
     <router-view/>
   </div>
@@ -12,18 +11,20 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { mapState } from 'vuex'
+import { stateModule } from './store'
 
-@Component({
-  computed: {
-    ...mapState(['user'])
-  }
-})
+@Component
 export default class App extends Vue {
-  user!: object
-
   mounted() {
 
+  }
+
+  get currentUser() {
+    return stateModule.user
+  }
+
+  goToHome() {
+    this.$router.push('/')
   }
 }
 </script>

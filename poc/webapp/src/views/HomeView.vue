@@ -3,10 +3,9 @@
     <h1>Appli démo : Billeterie en ligne</h1>
     <v-container>
       <v-row justify="space-around">
-        <v-btn to="/events">Voir les événements à venir</v-btn>
+        <v-btn :to="'/events'">Voir les événements à venir</v-btn>
       </v-row>
     </v-container>
-    <!-- <router-link to="/events">Voir les événements à venir</router-link> -->
   </div>
 </template>
 
