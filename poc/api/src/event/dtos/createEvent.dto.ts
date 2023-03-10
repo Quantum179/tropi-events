@@ -1,20 +1,16 @@
-import { IsDate, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsDateString, IsNotEmpty, IsString, MinLength } from "class-validator";
 
-export class CreateEditEventDto {
+export class CreateEventDto {
 	@IsString()
 	@IsNotEmpty()
 	@MinLength(5)
 	name: string
 
-	//@IsExistingOrga()
-	@IsNotEmpty()
-	idOrga: number
-
-	@IsDate()
+	@IsDateString()
 	@IsNotEmpty()
 	startDate: Date
 
-	@IsDate()
+	@IsDateString()
 	@IsNotEmpty()
 	endDate: Date
 

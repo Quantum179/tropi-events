@@ -43,7 +43,6 @@ export default class StateModule extends VuexModule implements IState {
       const result: { token: string, user: object } = await axios.post('http://localhost:3333/auth/login', form)
       return { ...result }
     } catch (error) {
-      console.log(error)
       return undefined
     }
   }

@@ -39,8 +39,6 @@ export default class CreateEditEventView extends Vue {
   createEvent!: (form: object) => void
 
   async mounted() {
-    console.log(this.id)
-
     if (this.id !== -1) {
       await this.fetchEvent(this.id)
     }

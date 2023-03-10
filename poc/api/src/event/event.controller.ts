@@ -1,6 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Request, Controller, Delete, Get, Param, Patch, Post, UseGuards, Headers } from "@nestjs/common";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { ViewUserDto } from "src/user/dtos/viewUser.dto";
-import { CreateEditEventDto } from "./dtos/createEditEvent.dto";
+import { CreateEventDto } from "./dtos/createEvent.dto";
+import EditEventDto from "./dtos/editEvent.dto";
 import { ViewEventDto } from "./dtos/ViewEvent.dto";
 import { EventService } from "./event.service";
 
@@ -20,13 +22,15 @@ export class EventController {
 	}
 
 	@Post()
-	postEvent(@Body() dto: CreateEditEventDto) {
-		
+	@UseGuards(JwtAuthGuard)
+	async postEvent(@Body() dto: CreateEventDto) {
+		const event = await this.eventService.createEvent(dto)
+		return { event }
 	}
 
 	@Patch(':id')
-	patchEvent(@Param('id') id: number, @Body() dto: CreateEditEventDto) {
-
+	async patchEvent(@Param('id') id: number, @Body() dto: EditEventDto) {
+		const updatedEvent = await this.eventService.editEvent(id, dto)
 	}
 
 	@Delete(':id')
