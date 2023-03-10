@@ -20,6 +20,7 @@ module.exports = {
     'semi': 0,
     'max-len': 0,
     'lines-between-class-members': 0,
-    '@typescript-eslint/no-inferrable-types': 0
+    '@typescript-eslint/no-inferrable-types': 0,
+    'camelcase': 0
   },
 };

@@ -8,7 +8,7 @@
             <v-col cols="12" md="4">
               <ValidationProvider name="username" immediate v-slot="{ errors }" rules="min:3|alpha_num">
                 <v-text-field v-model="formDto.username" label="Nom d'utilisateur" required></v-text-field>
-                <span>{{ errors[0] }}</span>
+                <span style="color: red">{{ errors[0] }}</span>
               </ValidationProvider>
             </v-col>
           </v-row>
@@ -17,7 +17,7 @@
             <v-col cols="12" md="4">
               <ValidationProvider name="password" immediate v-slot="{ errors }" rules="min:8">
                 <v-text-field v-model="formDto.password" label="Mot de passe" required type="password"></v-text-field>
-                <span>{{ errors[0] }}</span>
+                <span style="color: red">{{ errors[0] }}</span>
               </ValidationProvider>
             </v-col>
           </v-row>
@@ -34,7 +34,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import { required, min, alpha_num } from 'vee-validate/dist/rules';
 import { stateModule } from '../store'
 
 @Component({
@@ -48,8 +49,20 @@ export default class LoginView extends Vue {
 
   errors!: []
 
-  mounted() {
+  created() {
+    extend('required', {
+      ...required,
+      message: 'Ce champ est obligatoire'
+    })
+    extend('min', {
+      ...min,
+      message: 'Champ trop court'
+    })
 
+    extend('alpha_num', {
+      ...alpha_num,
+      message: 'Champ alphanumérique requis'
+    })
   }
 
   async submitLogin() {

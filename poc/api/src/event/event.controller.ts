@@ -29,11 +29,13 @@ export class EventController {
 	}
 
 	@Patch(':id')
+	@UseGuards(JwtAuthGuard)
 	async patchEvent(@Param('id') id: number, @Body() dto: EditEventDto) {
 		const updatedEvent = await this.eventService.editEvent(id, dto)
 	}
 
 	@Delete(':id')
+	@UseGuards(JwtAuthGuard)
 	deleteEvent(@Param('id') id: number) {
 		this.eventService.deleteEvent(id)
 	}
