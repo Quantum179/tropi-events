@@ -1,12 +1,12 @@
 <template>
   <div class="signup">
     <h1>Connexion</h1>
-    <ValidationObserver v-slot="{ handleSubmit }">
-      <v-form @submit.prevent="handleSubmit(submitLogin)">
+    <ValidationObserver v-slot="{ invalid }">
+      <v-form @submit.prevent="submitLogin">
         <v-container>
           <v-row>
             <v-col cols="12" md="4">
-              <ValidationProvider name="username" immediate v-slot="{ errors }" rules="min:3|alpha_num">
+              <ValidationProvider name="username" immediate v-slot="{ errors }" rules="required|min:3|alpha_num">
                 <v-text-field v-model="formDto.username" label="Nom d'utilisateur" required></v-text-field>
                 <span style="color: red">{{ errors[0] }}</span>
               </ValidationProvider>
@@ -15,7 +15,7 @@
 
           <v-row>
             <v-col cols="12" md="4">
-              <ValidationProvider name="password" immediate v-slot="{ errors }" rules="min:8">
+              <ValidationProvider name="password" immediate v-slot="{ errors }" rules="required|min:8">
                 <v-text-field v-model="formDto.password" label="Mot de passe" required type="password"></v-text-field>
                 <span style="color: red">{{ errors[0] }}</span>
               </ValidationProvider>
@@ -23,7 +23,7 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="4">
-              <v-btn type="submit" block class="mt-2">Submit</v-btn>
+              <v-btn type="submit" block class="mt-2" :disabled="invalid">Submit</v-btn>
             </v-col>
           </v-row>
         </v-container>
